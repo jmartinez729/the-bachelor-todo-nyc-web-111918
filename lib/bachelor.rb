@@ -53,11 +53,13 @@ def get_average_age_for_season(data, season)
   age = 0
   number_of_contestants = 0
 
-  data.each do |season, season_array|
-    season_array.each do |contestant_information|
-      age = age + contestant_information["age"]
-      number_of_contestants += 1
-    end
+  data[season.to_sym].each do |contestants|
+    contestants.each do |contestant_key, contestant_value|
+      if contestant_key == "age"
+        number_of_contestants += 1
+        age += contestant_value.to_f
+      end
+    end 
   end
-  return age / number_of_contestants
+  return (age / number_of_contestants).round
 end
